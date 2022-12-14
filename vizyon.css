@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital@1&display=swap');
+
+body {
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+}
+
+.altmenu {
+    display: none;
+    top: 68%;
+    border: 3px solid rgb(42, 42, 42);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+
+.altmenu li a {
+    padding: 10px 20px;
+    background-color: rgb(41, 41, 41);
+    border: 1px solid black;
+    line-height: 20px;
+    display: block;
+
+}
+
+.altmenu li a:hover {
+    background-color: grey;
+    transition: .5s;
+    color: black;
+}
+
+.analink:hover .altmenu {
+    display: block;
+    position: absolute;
+}
+
+.menu {
+    position: relative;
+    background-color: #000;
+    opacity: 0.8;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+
+.analink {
+    display: inline-block;
+    padding: 22px;
+    margin: 0 20px;
+}
+
+.analink a {
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.analink a:hover {
+    transition: .6s;
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+.icerik {
+    color: white;
+    font-size: 20px;
+    background: linear-gradient(to top, #505285 0%, #585e92 12%, #65689f 25%, #7474b0 37%, #7e7ebb 50%, #8389c7 62%, #9795d4 75%, #a2a1dc 87%, #b5aee4 100%);    padding:50px;
+    line-height: 250%;
+}
+
+h1{
+    font-size:x-large;
+}
+
+h2,h3 {
+    color: brown;
+    text-align: center;
+}
+
+hr {
+    border: 1px solid rebeccapurple;
+    background-color: #000;
+}
+
+ol{
+    text-align: center;
+    color: #fff;
+}
+
+ol li a:hover{
+    transition: .5s;
+    text-decoration: none;
+    color: #000;
+}
+
+.list {
+    color: #fff;
+}
+
+#ikincia {
+    margin-left: 4%;
+}
+
+#ucuncua {
+    margin-left: 8%;
+}
+
+#dorduncua {
+    margin-left: 11%;
+}
+
+#besincia {
+    margin-left: 9% ;
+}
+
+
+.footercontainer {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+
+.takipedin i {
+    display: inline-block;
+    padding: 40px 60px 0 0px;
+}
+
+.takipedin i:hover {
+    color: rebeccapurple;
+    transition: .5s;
+    transform: scale(2);
+}
+
+.telif {
+
+    color: gray;
+    margin: auto;
+    display: inline-block;
+    margin-left: 18%;
+}
+
+.hakkimizda {
+    width: 30%;
+}
+
+.hakkimizda h4{
+    margin-left: 10%;
+    letter-spacing: 2px;
+}
+
+.hakkimizdali {
+    margin-left: 10%;
+    letter-spacing: 2px;
+}
+
