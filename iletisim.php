@@ -1,18 +1,3 @@
-<?php
-
-session_start();
-if(isset($_SESSION["kullaniciad"])){
-    echo "<h1 style = color:white; text-align:center;>" ."HOŞ GELDİN" .$_SESSION["kullaniciad"]."</h1>";
-}
-
-else {
-    echo "<h1>Bu Sayfayı Görüntüleme Yetkiniz Yoktur!</h1>";
-    exit;
-
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -24,12 +9,12 @@ else {
     <meta name="keywords" content="Madencilik, Mining, Maden">
     <meta name="description" content="Madencilik">
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="iletisim.css">
     <link rel="stylesheet" href="font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-    <title>Üyelere Özel</title>
+    <title>İletişim</title>
 </head>
 
 <body>
@@ -74,7 +59,12 @@ else {
                     <li><a href="iletisim.php">İletişim</a></li>
                 </ul>
             </li>
-                <li class="ana-link"><a href="cikis.php">ÇIKIŞ YAP</a>
+                <li class="ana-link"><a href="">ÜYE İŞLEMLERİ</a>
+                    <ul class="alt-menu">
+                        <li><a href="giris.php">Giriş Yap</a></li>
+                        <li><a href="kayitol.php">Kayıt Ol</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 
@@ -86,16 +76,33 @@ else {
 
     <section class="icerik">
 
-        <h2>Üyelere Özel</h2>
+        <h2>İletişim Form</h2>
         <hr>
         <br>
         <?php
         require('veritabani.php');
 
-        $sorgu = $baglandb->query("SELECT * FROM uyeozel");
-        $satir = $sorgu->fetchObject();
-        echo $satir->icerik;
+        if (isset($_POST["gonder"])) { // kayitol butonuna basıldığında...
+    
+            $sql = "INSERT INTO iletisim(isim,mail,tel,mesaj) VALUES(?, ?, ?,?)"; // Sorguyu bir değişkene atadık
+    
+            $baglandb // Veri Tabanına bağlandığımız değişken.(veritabani.php)
+                ->prepare($sql) // Gönderdiğimiz sorguyu veri tabanı çalıştırmaz ayrıştırır. Veri tabanı daha hızlı çalışır, SQL Injection'a karşı güvenli.
+                ->execute([$_POST["isim"], $_POST["mail"], $_POST["tel"],$_POST["mesaj"]]);  // , daha sonra gönderilen parametrelerle birlikte çalıştırır.
+    
+            echo "<script> alert('İletiniz Alınmıştır.') </script>";
+            header("Refresh:0 url =index.php"); // 1 Saniye sonra giris.php'ye yönlendirdik
+        }
+
         ?>
+
+        <form action="" method="POST">
+            <input type="text" name = "isim" placeholder="Adınız Soyadınız:">
+            <input type="text" name = "mail" placeholder="Email Adresiniz:">
+            <input type="tel" name = "tel" placeholder="Telefon Numaranız:">
+            <textarea name="mesaj" id="" cols="30" rows="10" placeholder="Mesajınız"></textarea>
+            <input type="submit" name = "gonder" value="Gönder">
+        </form>
         <br>
         <br>
         <hr>

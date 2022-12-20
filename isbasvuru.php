@@ -13,9 +13,9 @@
     
     <?php
     
-    include("veritabani.php");
+    require("veritabani.php"); // Veri Tabanı dosyasını dahil ettik.
     
-    if (isset($_POST["basvur"])) {
+    if (isset($_POST["basvur"])) { // başvur butonuna basıldı ise..
     
         $ad = $_POST["ad"];
         $soyad = $_POST["soyad"];
@@ -23,12 +23,14 @@
         $tel = $_POST["tel"];
         $mail = $_POST["mail"];
         $ozgecmis = $_POST["ozgecmis"];
-    
-        $sql = "INSERT INTO basvuru (ad,soyad,tel,dogumtarih,mail,ozgecmis) VALUES('".$ad."','".md5($soyad)."','".md5($tel)."','".$dogumtarih."','".$mail."','".$ozgecmis."')";
-        $sonuc = mysqli_query($baglandb, $sql);
-        echo "<script> alert('Başvurunuz Alınmıştır.!') </script>";
-        header("Refresh: 3; url = index.html");
-    
+        
+        $sql = "INSERT INTO isbasvuru(ad,soyad,dogumtarih,telno,mail,cv) VALUES(?,?,?,?,?,?)"; // SQL Sorgumuz
+
+        $baglandb -> prepare($sql) -> execute([$ad,$soyad,$dogumtarih,$tel,$mail,$ozgecmis]); // Sorgu Hazırlandı ve "?" yazan yerlere parametreleri gönderdik.
+
+        echo "<script> alert('Başvurunuz Alınmıştır.') </script>";
+        header("Refresh:0; url = index.php");
+
     }
     
     ?>
@@ -110,10 +112,9 @@
     
             margin-top: 40px;
         }
+
     </style>
-    
-    <body>
-    
+        
         <div class="form">
     
             <form action="" method="post">
@@ -123,18 +124,13 @@
                 <input type="date" name="dogumtarih" placeholder="Doğum Tarihiniz" required>
                 <input type="tel" name="tel" maxlength = "10" placeholder="Telefon Numaranız" required>
                 <input type="email" name="mail" maxlength = "20" placeholder="Mailiniz" required>
-                <textarea name="ozgecmis" id="ozgecmis" cols="30" rows="10" >Kendinizden Bahsedin.</textarea>
+                <textarea name="ozgecmis" id="ozgecmis" cols="30" rows="10" placeholder="Kendinizden Bahsedin."></textarea>
                 <input button type="submit" name="basvur" value="Başvur" id="buton">
                 <input type="reset" value="Temizle" id="temizle">
             </form>
         </div>
     
-    
-    
-    </body>
-    
-    </html>
-    
-    
 </body>
+
 </html>
+        

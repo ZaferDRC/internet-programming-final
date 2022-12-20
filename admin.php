@@ -8,7 +8,7 @@
     <meta name="description" content="Madencilik Nedir, Madencilik">
     <meta name="keywords" content="Madencilik, Mining Maden,">
     <meta name="author" content="Zafer Yiğithan Dereci">
-    <title>Giriş Yap</title>
+    <title>Admin Panel</title>
 </head>
 
 <body>
@@ -22,16 +22,16 @@
         $kullaniciad = $_POST["kullaniciad"]; // POST ile gelen değişken atamaları yapıldı.
         $sifre = $_POST["sifre"];
 
-        $kullanici_sor = $baglandb->prepare("SELECT * FROM uye WHERE kullanici_adi = ? AND sifre = ?"); // SQL sorgusu hazırlandı
-        $kullanici_sor->execute([$kullaniciad, md5($sifre)]); // Sorgu çalıştırıldı ve "?" Yazan yerlere sırasıyla buradaki değişkenler gidecek. kayıt eklenirken md5 ile şifrelendiği için burada da şifreyi md5 olarak gönderdik.
+        $kullanici_sor = $baglandb->prepare("SELECT * FROM kullanici WHERE kullaniciad = ? AND sifre = ?"); // SQL sorgusu hazırlandı
+        $kullanici_sor->execute([$kullaniciad, $sifre]); // Sorgu çalıştırıldı ve "?" Yazan yerlere sırasıyla buradaki değişkenler gidecek. 
 
-        $say = $kullanici_sor->rowCount(); // Sorgudan Bir tam sayı değeri dönecek, 1 veya 0 
+        $kayitsay = $kullanici_sor->rowCount(); // Sorgudan Bir tam sayı değeri dönecek, 1 veya 0 
 
-        if ($say > 0) { // Dönen Sonuç 1 ise ...
+        if ($kayitsay > 0) { // Dönen Sonuç 1 ise ...
             session_start();
-            $_SESSION["kullaniciad"] = $kullaniciad;
+            $_SESSION["kullaniciad"] = sha1(md5("admin"));
             echo "<script>alert('Giriş Başarılı, Yönlendiriliyorsunuz..')</script>";
-            header("Refresh:0; url = ozel.php");
+            header("Refresh:0; url = adminanasayfa.php");
         }
         elseif (empty($kullaniciad) || empty($sifre)) { // Kullanıcı adı ve şifre text'i boş ise..
 
@@ -39,7 +39,6 @@
         } else {
             echo "<h2> Kullanıcı Adı Veya Şifre Yanlış</h2>";
         }
-
     }
 
     ?>
@@ -134,26 +133,17 @@
         }
     </style>
 
-    <body>
 
         <div class="form">
 
             <form action="" method="post">
-                <h1>Giriş Yap</h1>
+                <h1>Admin Giriş</h1>
                 <input type="text" name="kullaniciad" maxlength="15" placeholder="Kullanıcı Adı" require>
                 <input type="password" name="sifre" maxlength="10" placeholder="Şifre" require>
                 <input button type="submit" name="giris" value="Giris Yap" id="buton">
                 <input type="reset" value="Temizle" id="temizle">
-                <a href="kayitol.php">Hesabın Yok Mu ? Tıkla.</a>
             </form>
         </div>
-
-
-
-    </body>
-
-</html>
-
 
 </body>
 

@@ -1,18 +1,3 @@
-<?php
-
-session_start();
-if(isset($_SESSION["kullaniciad"])){
-    echo "<h1 style = color:white; text-align:center;>" ."HOŞ GELDİN" .$_SESSION["kullaniciad"]."</h1>";
-}
-
-else {
-    echo "<h1>Bu Sayfayı Görüntüleme Yetkiniz Yoktur!</h1>";
-    exit;
-
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -29,7 +14,7 @@ else {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-    <title>Üyelere Özel</title>
+    <title>Madencilik</title>
 </head>
 
 <body>
@@ -74,7 +59,12 @@ else {
                     <li><a href="iletisim.php">İletişim</a></li>
                 </ul>
             </li>
-                <li class="ana-link"><a href="cikis.php">ÇIKIŞ YAP</a>
+                <li class="ana-link"><a href="">ÜYE İŞLEMLERİ</a>
+                    <ul class="alt-menu">
+                        <li><a href="giris.php">Giriş Yap</a></li>
+                        <li><a href="kayitol.php">Kayıt Ol</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 
@@ -86,19 +76,26 @@ else {
 
     <section class="icerik">
 
-        <h2>Üyelere Özel</h2>
+        <h2>Madencilik Nedir ?</h2>
         <hr>
         <br>
         <?php
         require('veritabani.php');
 
-        $sorgu = $baglandb->query("SELECT * FROM uyeozel");
+        $sorgu = $baglandb->query("SELECT * FROM anasayfa");
         $satir = $sorgu->fetchObject();
         echo $satir->icerik;
         ?>
         <br>
         <br>
         <hr>
+
+        <marquee behavior="alternate" direction="right" scrollamount="10">
+            <img src="Resimler/foto4duz.jpg" alt="kayanresim" class="foto">
+        </marquee>
+        <marquee behavior="alternate" direction="left" scrollamount="10">
+            <img src="Resimler/IMG_1882duz.jpg" alt="kayanresim" class="foto">
+        </marquee>
     </section>
 
     <!--İcerik Bölümü Bitiş-->
