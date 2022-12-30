@@ -15,19 +15,41 @@
 
     <?php
 
-    require("veritabani.php"); // Veri tabanına bağlandığımız dosyayı dahil ettik
+    require("veritabani.php");
 
-    if (isset($_POST["kayitol"])) { // kayitol butonuna basıldığında...
+    if (isset($_POST["kayitol"])) {
 
-        $sql = "INSERT INTO uye(kullanici_adi,sifre,mail) VALUES(?, ?, ?)"; // Sorguyu bir değişkene atadık
 
-        $baglandb // Veri Tabanına bağlandığımız değişken.(veritabani.php)
-            ->prepare($sql) // Gönderdiğimiz sorguyu veri tabanı çalıştırmaz ayrıştırır. Veri tabanı daha hızlı çalışır, SQL Injection'a karşı güvenli.
-            ->execute([$_POST["kullaniciad"], md5($_POST["sifre"]), $_POST["mail"]]);  // , daha sonra gönderilen parametrelerle birlikte çalıştırır. şifreyi md5 ile şifreledik.
+        if (is_numeric($_POST['kullaniciad'])) {
 
-        echo "<script> alert('Başarıyla Kayıt Oldunuz, Giriş Sayfasına Yönlendiriliyorsunuz :)') </script>";
-        header("Refresh:1 url =giris.php"); // 1 Saniye sonra giris.php'ye yönlendirdik
+            echo "<script> alert('Kullanıcı Adı Sadece Rakamdan Oluşamaz!') </script>";
+            echo "<script> window.location.href = 'kayitol.php' </script>";
+        } 
+        
+        else {
+
+            $kontrol = $baglandb
+                ->query("SELECT * FROM uye WHERE kullanici_adi = '{$_POST['kullaniciad']}'");
+
+            if ($kontrol->rowCount() > 0) {
+
+
+                echo "<script> alert('KULLANICI ADI ZATEN MEVCUT!') </script>";
+                echo "<script> window.location.href = 'kayitol.php' </script>";
+            }
+
+            $sql = "INSERT INTO uye(kullanici_adi,sifre,mail) VALUES(?, ?, ?)"; // Sorguyu bir değişkene atadık
+
+            $baglandb // Veri Tabanına bağlandığımız değişken.(veritabani.php)
+                ->prepare($sql) // Gönderdiğimiz sorguyu veri tabanı çalıştırmaz ayrıştırır. Veri tabanı daha hızlı çalışır, SQL Injection'a karşı güvenli.
+                ->execute([$_POST["kullaniciad"], md5($_POST["sifre"]), $_POST["mail"]]);  // , daha sonra gönderilen parametrelerle birlikte çalıştırır. şifreyi md5 ile şifreledik.
+
+
+            echo "<script> alert('Başarıyla Kayıt Oldunuz, Giriş Sayfasına Yönlendiriliyorsunuz :)') </script>";
+            header("Refresh:1 url = giris.php");
+        }
     }
+
 
     ?>
 

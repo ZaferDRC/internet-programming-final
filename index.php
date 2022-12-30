@@ -1,3 +1,22 @@
+<?php
+
+$xml = simplexml_load_file("https://www.tcmb.gov.tr/kurlar/today.xml");
+
+foreach ($xml->Currency as $dovizcins) {
+
+    if ($dovizcins["Kod"] == "USD") {
+        $UsdAlis  = $dovizcins->ForexBuying;
+        $UsdSatis = $dovizcins->ForexSelling;
+    }
+
+    if ($dovizcins["Kod"] == "EUR") {
+        $EurAlis  = $dovizcins->ForexBuying;
+        $EurSatis = $dovizcins->ForexSelling;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -54,11 +73,11 @@
                     </ul>
                 </li>
                 <li class="ana-link"><a href="iletisim.php">İLETİŞİM</a>
-                <ul class="alt-menu">
-                    <li><a href="isbasvuru.php">İş Başvurusu</a></li>
-                    <li><a href="iletisim.php">İletişim</a></li>
-                </ul>
-            </li>
+                    <ul class="alt-menu">
+                        <li><a href="isbasvuru.php">İş Başvurusu</a></li>
+                        <li><a href="iletisim.php">İletişim</a></li>
+                    </ul>
+                </li>
                 <li class="ana-link"><a href="">ÜYE İŞLEMLERİ</a>
                     <ul class="alt-menu">
                         <li><a href="giris.php">Giriş Yap</a></li>
@@ -79,12 +98,24 @@
         <h2>Madencilik Nedir ?</h2>
         <hr>
         <br>
+
+        <marquee direction="right">
+            <div>
+                <b>USD Alış: </b> <?php echo $UsdAlis; ?> <br>
+                <b>USD Satış: </b> <?php echo $UsdSatis; ?> <br>
+                <b>EURO Alış: </b> <?php echo $EurAlis; ?> <br>
+                <b>EURO Satış: </b> <?php echo $EurAlis; ?>
+            </div>
+        </marquee>
+
+
         <?php
         require('veritabani.php');
 
         $sorgu = $baglandb->query("SELECT * FROM anasayfa");
         $satir = $sorgu->fetchObject();
         echo $satir->icerik;
+
         ?>
         <br>
         <br>

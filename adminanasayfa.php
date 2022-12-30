@@ -93,8 +93,9 @@
     if (isset($_POST["kaydet"])) {
 
         $icerik = $_POST["icerik"];
+        $filtreicerik = addslashes($icerik);
         $sorgu = $baglandb->query("DELETE FROM anasayfa");
-        $sorgu = $baglandb->query("INSERT INTO anasayfa (icerik) VALUES('$icerik')");
+        $sorgu = $baglandb->query("INSERT INTO anasayfa (icerik) VALUES('$filtreicerik')");
 
         if ($sorgu) {
 
@@ -147,8 +148,7 @@
 
     <form action="" method="POST">
         <h1 style="font-size: x-large; color:#fff;">ANASAYFA İÇERİK</h1>
-        <textarea rows="20" cols="80" name="icerik"> <?php echo $satir->icerik; // Bu, veri tabanındaki icerik sütunu
-                                                        ?></textarea><br><br>
+        <textarea rows="20" cols="80" name="icerik"> <?php echo $satir->icerik;?></textarea><br><br>
         <input type="submit" name="kaydet" value="Kaydet">
     </form>
 </body>

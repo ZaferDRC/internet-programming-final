@@ -1,8 +1,11 @@
 <?php
 
 session_start();
+
 if(isset($_SESSION["kullaniciad"])){
-    echo "<h1 style = color:white; text-align:center;>" ."HOŞ GELDİN" .$_SESSION["kullaniciad"]."</h1>";
+    
+    echo "<script>alert('Üyelere Özel Sayfaya Hoş Geldin..')</script>";
+
 }
 
 else {

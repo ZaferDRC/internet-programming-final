@@ -148,7 +148,7 @@
     </header>
 
     <form action="" method="POST">
-        <h1 style="font-size: x-large; color:#fff;">AÇIK OCAK İÇERİK:</h1>
+        <h1 style="font-size: x-large; color:#fff;">ÜYELERE ÖZEL İÇERİK:</h1>
         <textarea rows="20" cols="80" name="icerik"> <?php echo $satir->icerik; // Bu, veri tabanındaki icerik sütunu
                                                         ?></textarea><br><br>
         <input type="submit" name="kaydet" value="Kaydet">

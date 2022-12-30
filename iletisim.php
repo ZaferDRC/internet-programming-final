@@ -54,11 +54,11 @@
                     </ul>
                 </li>
                 <li class="ana-link"><a href="iletisim.php">İLETİŞİM</a>
-                <ul class="alt-menu">
-                    <li><a href="isbasvuru.php">İş Başvurusu</a></li>
-                    <li><a href="iletisim.php">İletişim</a></li>
-                </ul>
-            </li>
+                    <ul class="alt-menu">
+                        <li><a href="isbasvuru.php">İş Başvurusu</a></li>
+                        <li><a href="iletisim.php">İletişim</a></li>
+                    </ul>
+                </li>
                 <li class="ana-link"><a href="">ÜYE İŞLEMLERİ</a>
                     <ul class="alt-menu">
                         <li><a href="giris.php">Giriş Yap</a></li>
@@ -83,25 +83,35 @@
         require('veritabani.php');
 
         if (isset($_POST["gonder"])) { // kayitol butonuna basıldığında...
-    
-            $sql = "INSERT INTO iletisim(isim,mail,tel,mesaj) VALUES(?, ?, ?,?)"; // Sorguyu bir değişkene atadık
-    
-            $baglandb // Veri Tabanına bağlandığımız değişken.(veritabani.php)
-                ->prepare($sql) // Gönderdiğimiz sorguyu veri tabanı çalıştırmaz ayrıştırır. Veri tabanı daha hızlı çalışır, SQL Injection'a karşı güvenli.
-                ->execute([$_POST["isim"], $_POST["mail"], $_POST["tel"],$_POST["mesaj"]]);  // , daha sonra gönderilen parametrelerle birlikte çalıştırır.
-    
-            echo "<script> alert('İletiniz Alınmıştır.') </script>";
-            header("Refresh:0 url =index.php"); // 1 Saniye sonra giris.php'ye yönlendirdik
+
+            if (!is_numeric($_POST['tel'])) {
+
+                echo "<script> alert('Telefon Numarası Sadece Rakamlardan Oluşmalı!') </script>";
+                echo "<script> window.location.href = 'iletisim.php' </script>";
+            } 
+            
+            else {
+
+                $sql = "INSERT INTO iletisim(isim,mail,tel,mesaj) VALUES(?, ?, ?,?)"; // Sorguyu bir değişkene atadık
+
+                $baglandb // Veri Tabanına bağlandığımız değişken.(veritabani.php)
+                    ->prepare($sql) // Gönderdiğimiz sorguyu veri tabanı çalıştırmaz ayrıştırır. Veri tabanı daha hızlı çalışır, SQL Injection'a karşı güvenli.
+                    ->execute([$_POST["isim"], $_POST["mail"], $_POST["tel"], $_POST["mesaj"]]);  // , daha sonra gönderilen parametrelerle birlikte çalıştırır.
+
+                echo "<script> alert('İletiniz Alınmıştır.') </script>";
+                header("Refresh:0 url =index.php"); // 1 Saniye sonra giris.php'ye yönlendirdik
+
+            }
         }
 
         ?>
 
         <form action="" method="POST">
-            <input type="text" name = "isim" placeholder="Adınız Soyadınız:">
-            <input type="text" name = "mail" placeholder="Email Adresiniz:">
-            <input type="tel" name = "tel" placeholder="Telefon Numaranız:">
+            <input type="text" name="isim" placeholder="Adınız Soyadınız:">
+            <input type="text" name="mail" placeholder="Email Adresiniz:">
+            <input type="tel" name="tel" placeholder="Telefon Numaranız:">
             <textarea name="mesaj" id="" cols="30" rows="10" placeholder="Mesajınız"></textarea>
-            <input type="submit" name = "gonder" value="Gönder">
+            <input type="submit" name="gonder" value="Gönder">
         </form>
         <br>
         <br>

@@ -93,8 +93,9 @@
     if (isset($_POST["kaydet"])) {
 
         $icerik = $_POST["icerik"];
+        $filtreicerik = addslashes($icerik);
         $sorgu = $baglandb->query("DELETE FROM madenhavalandirma");
-        $sorgu = $baglandb->query("INSERT INTO madenhavalandirma (icerik) VALUES('$icerik')");
+        $sorgu = $baglandb->query("INSERT INTO madenhavalandirma (icerik) VALUES('$filtreicerik')");
 
         if ($sorgu) {
 
